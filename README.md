@@ -1,14 +1,10 @@
 # astrbot-plugin-helloworld
 
-AstrBot 插件模板 / A template plugin for AstrBot plugin feature
+本插件由AI生成 由情劣等生@红茶川 调整试用完善
 
-> [!NOTE]
-> This repo is just a template of [AstrBot](https://github.com/AstrBotDevs/AstrBot) Plugin.
-> 
-> [AstrBot](https://github.com/AstrBotDevs/AstrBot) is an agentic assistant for both personal and group conversations. It can be deployed across dozens of mainstream instant messaging platforms, including QQ, Telegram, Feishu, DingTalk, Slack, LINE, Discord, Matrix, etc. In addition, it provides a reliable and extensible conversational AI infrastructure for individuals, developers, and teams. Whether you need a personal AI companion, an intelligent customer support agent, an automation assistant, or an enterprise knowledge base, AstrBot enables you to quickly build AI applications directly within your existing messaging workflows.
+本插件的原理为
+由机器人本地自生成最终幻想14PVP地图轮换日历,并截图发送
 
-# Supports
+接入Astrbot后，在群内或私聊机器人，输入/pvp日历，则机器人自动本地生成并发送本月的最终幻想14 PVP日历
 
-- [AstrBot Repo](https://github.com/AstrBotDevs/AstrBot)
-- [AstrBot Plugin Development Docs (Chinese)](https://docs.astrbot.app/dev/star/plugin-new.html)
-- [AstrBot Plugin Development Docs (English)](https://docs.astrbot.app/en/dev/star/plugin-new.html)
+感谢github用户cbx25736开源的FF14 PVP日历网页版 https://github.com/cbx25736/ff14_pvpmap 本插件仅做本地化并接入Astrbot
