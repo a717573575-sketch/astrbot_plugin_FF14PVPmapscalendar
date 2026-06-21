@@ -1,4 +1,4 @@
-# astrbot-plugin-helloworld
+# astrbot-plugin-FF14pvpmapscalender
 
 本插件由AI生成 由情劣等生@红茶川 调整试用完善
 
