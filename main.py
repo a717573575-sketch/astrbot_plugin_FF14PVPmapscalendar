@@ -21,15 +21,15 @@ HTML_CONTENT = r"""
             margin: 0; 
             padding: 0; 
             height: 100%; 
-            background: #f0f2f5;   /* 浅灰背景，更亮更柔和 */
-            color: #1e293b;        /* 深灰色文字，保证可读性 */
+            background: #f0f2f5;
+            color: #1e293b;
             font-family: system-ui, -apple-system, sans-serif; 
         }
         .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 1rem 1.5rem; }
         .text-center { text-align: center; }
-        .text-primary { color: #f59e0b; }   /* 保留橙色强调 */
-        .text-white { color: #1e293b; }     /* 不再使用白色，改为深色 */
-        .text-gray-300 { color: #475569; }  /* 灰色更深，易读 */
+        .text-primary { color: #f59e0b; }
+        .text-white { color: #1e293b; }
+        .text-gray-300 { color: #475569; }
         .font-bold { font-weight: 700; }
         .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
         .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
@@ -75,7 +75,7 @@ HTML_CONTENT = r"""
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.75rem; flex: 1; }
         .calendar-day {
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: rgba(255,255,255,0.8);  /* 浅色半透明背景 */
+            background: rgba(255,255,255,0.8);
             border: 1px solid rgba(0,0,0,0.08);
             border-radius: 0.5rem;
             min-height: 50px; position: relative;
@@ -277,7 +277,6 @@ HTML_CONTENT = r"""
             const info = MAP_INFO[CYCLE[idx]];
             const nextInfo = MAP_INFO[CYCLE[nextIdx]];
 
-            // 当前地图
             const curBadge = document.getElementById('current-map-badge');
             curBadge.style.backgroundColor = info.color;
             curBadge.innerHTML = '<span class="map-badge-text" style="font-size:24px;">' + info.firstChar + '</span>';
@@ -285,7 +284,6 @@ HTML_CONTENT = r"""
             document.getElementById('current-map-name').style.color = info.color;
             document.getElementById('current-map-desc').textContent = info.desc;
 
-            // 下个地图
             const nextBadge = document.getElementById('next-map-badge');
             nextBadge.style.backgroundColor = nextInfo.color;
             nextBadge.innerHTML = '<span class="map-badge-text" style="font-size:24px;">' + nextInfo.firstChar + '</span>';
@@ -370,9 +368,9 @@ HTML_CONTENT = r"""
 # ==================== AstrBot 插件类 ====================
 @register(
     name="ff14_pvp_map",
-    version="1.0.1",       # 更新版本号
+    version="1.0.2",       # 更新版本号
     author="情劣等生@红茶川",
-    desc="接入astrbot后 输入 /pvp日历 获取FF14 PVP地图网页截图（浅色背景高对比度版）",
+    desc="接入astrbot后 输入 /pvp日历 获取FF14 PVP地图网页截图（浅色背景高对比度版，修复超时）",
 )
 class FF14PvpMap(Star):
     def __init__(self, context: Context):
@@ -390,14 +388,12 @@ class FF14PvpMap(Star):
             )
             page = await browser.new_page(viewport={"width": 1365, "height": 911})
             
-            # 直接设置 HTML 内容
             await page.set_content(HTML_CONTENT, timeout=30000)
             
-            # 等待日历网格生成
-            await page.wait_for_selector("#calendar-grid .calendar-day", timeout=15000)
+            # ✅ 修复：等待 .day-number（只在实际日期格出现，且始终可见）
+            await page.wait_for_selector("#calendar-grid .day-number", timeout=15000)
             await page.wait_for_timeout(2000)
             
-            # 截图
             await page.screenshot(
                 path=img_path,
                 type='jpeg',
@@ -418,7 +414,6 @@ class FF14PvpMap(Star):
             ]
             yield event.chain_result(msg_chain)
 
-            # 清理临时文件
             if os.path.exists(img_file):
                 os.remove(img_file)
         except Exception as e:
